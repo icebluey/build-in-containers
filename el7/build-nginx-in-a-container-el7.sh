@@ -289,13 +289,13 @@ ${_stream_module_args} \
 --add-module=../modules/ngx_http_memc_module \
 --add-module=../modules/ngx_http_redis2_module \
 --add-module=../modules/ngx_http_substitutions_filter_module \
+--add-module=../modules/ngx_http_naxsi_module/naxsi_src \
+--add-module=../modules/ngx_pagespeed \
 --add-module=../modules/ngx_rtmp_module \
 --with-ld-opt="$LDFLAGS"
 
 #--with-cc-opt=''
 #--with-ld-opt='-Wl,-z,relro -Wl,-z,now'
-#--add-module=../modules/ngx_http_naxsi_module/naxsi_src \
-#--add-module=../modules/ngx_pagespeed \
 
 make -j2
 
