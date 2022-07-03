@@ -1,0 +1,38 @@
+#!/usr/bin/env bash
+export PATH=$PATH:/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin
+TZ='UTC'; export TZ
+
+if ! grep -q '^alias ll=' ~/.bashrc; then echo "alias ll='/bin/ls --color -lah'" >> ~/.bashrc; . ~/.bashrc; fi
+
+dnf makecache
+dnf install -y epel-release ; dnf makecache
+dnf upgrade -y epel-release ; dnf makecache
+dnf install -y dnf-plugins-core
+dnf config-manager --set-enabled powertools
+dnf makecache
+dnf upgrade -y
+
+yum install -y openssl-libs
+yum install -y openssl
+yum install -y openssl-devel
+
+yum install -y gcc cpp gcc-c++ libstdc++-devel make m4 libtool pkgconfig groff-base \
+  glibc-devel glib2-devel systemd-devel libuuid-devel \
+  ncurses-devel ncurses elfutils-libelf-devel elfutils-devel libselinux-devel \
+  libcom_err-devel libverto-devel keyutils-libs-devel krb5-devel libkadm5 libsepol-devel \
+  redhat-rpm-config rpm-build rpmdevtools cpio wget ca-certificates curl \
+  xz xz-devel bzip2 bzip2-devel gzip zlib-devel tar unzip zip \
+  binutils util-linux findutils diffutils shadow-utils passwd \
+  socat ethtool iptables ebtables ipvsadm ipset psmisc \
+  bash-completion conntrack-tools iproute nfs-utils net-tools \
+  authconfig libpwquality pam-devel pam audit which file sed gawk grep less \
+  patch crontabs cronie info man-db lsof lshw dmidecode pciutils-libs pciutils
+
+yum install -y perl perl-devel perl-libs perl-Env perl-ExtUtils-Embed \
+  perl-ExtUtils-Install perl-ExtUtils-MakeMaker perl-ExtUtils-Manifest \
+  perl-ExtUtils-ParseXS perl-Git perl-JSON perl-SGMLSpm perl-libwww-perl perl-podlators
+
+/sbin/ldconfig >/dev/null 2>&1
+
+
+
