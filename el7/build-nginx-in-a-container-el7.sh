@@ -117,6 +117,7 @@ _dl_nginx() {
 
 _build_libmaxminddb() {
     set -e
+    LDFLAGS=''
     LDFLAGS="${_SAVED_LDFLAGS}"' -Wl,-rpath,\$$ORIGIN'
     export LDFLAGS
     cd /tmp
@@ -168,6 +169,7 @@ _build_libmaxminddb() {
 }
 _build_brotli() {
     set -e
+    LDFLAGS=''
     LDFLAGS="${_SAVED_LDFLAGS}"' -Wl,-rpath,\$$ORIGIN'
     export LDFLAGS
     cd /tmp
@@ -255,6 +257,7 @@ sleep 2
 
 bash /opt/gcc/set-static-libstdcxx
 
+LDFLAGS=''
 LDFLAGS="${_SAVED_LDFLAGS} -Wl,-rpath,/usr/lib64/nginx/private"
 export LDFLAGS
 
