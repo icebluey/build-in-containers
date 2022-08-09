@@ -123,6 +123,7 @@ _dl_nginx() {
 
 _build_libmaxminddb() {
     set -e
+    LDFLAGS=''
     LDFLAGS="${_SAVED_LDFLAGS}"' -Wl,-rpath,\$$ORIGIN'
     export LDFLAGS
     cd /tmp
@@ -174,6 +175,7 @@ _build_libmaxminddb() {
 }
 _build_brotli() {
     set -e
+    LDFLAGS=''
     LDFLAGS="${_SAVED_LDFLAGS}"' -Wl,-rpath,\$$ORIGIN'
     export LDFLAGS
     cd /tmp
@@ -270,6 +272,7 @@ if [[ -f /usr/lib/rpm/redhat/redhat-hardened-cc1 ]]; then
     cat /dev/null > /usr/lib/rpm/redhat/redhat-hardened-cc1
 fi
 
+LDFLAGS=''
 LDFLAGS="${_SAVED_LDFLAGS} -Wl,-rpath,/usr/lib64/nginx/private"
 export LDFLAGS
 
