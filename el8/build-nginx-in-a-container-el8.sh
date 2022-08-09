@@ -21,8 +21,7 @@ LDFLAGS='-Wl,-z,relro -Wl,--as-needed -Wl,-z,now'
 export LDFLAGS
 
 _SAVED_LDFLAGS="${LDFLAGS}"
-LDFLAGS="${_SAVED_LDFLAGS} -Wl,-rpath,/usr/lib64/nginx/private"
-export LDFLAGS
+export _SAVED_LDFLAGS
 
 CC=gcc
 export CC
@@ -124,6 +123,8 @@ _dl_nginx() {
 
 _build_libmaxminddb() {
     set -e
+    LDFLAGS="${_SAVED_LDFLAGS}"' -Wl,-rpath,\$$ORIGIN'
+    export LDFLAGS
     cd /tmp
     _tmp_dir="$(mktemp -d)"
     cd "${_tmp_dir}"
@@ -173,6 +174,8 @@ _build_libmaxminddb() {
 }
 _build_brotli() {
     set -e
+    LDFLAGS="${_SAVED_LDFLAGS}"' -Wl,-rpath,\$$ORIGIN'
+    export LDFLAGS
     cd /tmp
     _tmp_dir="$(mktemp -d)"
     cd "${_tmp_dir}"
@@ -266,6 +269,9 @@ if [[ -f /usr/lib/rpm/redhat/redhat-hardened-cc1 ]]; then
     cp -f /usr/lib/rpm/redhat/redhat-hardened-cc1 /usr/lib/rpm/redhat/redhat-hardened-cc1.${_suffix_cc1}
     cat /dev/null > /usr/lib/rpm/redhat/redhat-hardened-cc1
 fi
+
+LDFLAGS="${_SAVED_LDFLAGS} -Wl,-rpath,/usr/lib64/nginx/private"
+export LDFLAGS
 
 ./auto/configure \
 --build=x86_64-linux-gnu \
