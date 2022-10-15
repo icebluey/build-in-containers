@@ -424,7 +424,7 @@ rm -fr /tmp/nginx/etc/nginx/nginx.conf
 
 cd /tmp/nginx
 sleep 1
-chown -R root:root *
+chown -R root:root ./
 sleep 1
 find /tmp/nginx -type f -name .packlist -exec rm -vf '{}' \;
 find /tmp/nginx -type f -name perllocal.pod -exec rm -vf '{}' \;
