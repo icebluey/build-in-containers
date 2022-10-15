@@ -59,7 +59,7 @@ _dl_nginx() {
     rm -f openssl-*.tar*
     mv -f openssl-* openssl
     # pcre2
-    _pcre2_ver="$(wget -qO- 'https://github.com/PCRE2Project/pcre2/releases' | grep -i 'pcre2-.*.tar.bz2' | sed 's|"|\n|g' | grep -i '^/PCRE2Project/pcre2/releases/download' | sed 's|.*/pcre2-||g' | sed 's|\.tar.*||g' | grep -ivE 'alpha|beta|rc' | sort -V | uniq | tail -n 1)"
+    _pcre2_ver="$(wget -qO- 'https://github.com/PCRE2Project/pcre2/releases' | grep -i 'pcre2-[1-9]' | sed 's|"|\n|g' | grep -i '^/PCRE2Project/pcre2/tree' | sed 's|.*/pcre2-||g' | sed 's|\.tar.*||g' | grep -ivE 'alpha|beta|rc' | sort -V | uniq | tail -n 1)"
     wget -c -t 9 -T 9 "https://github.com/PCRE2Project/pcre2/releases/download/pcre2-${_pcre2_ver}/pcre2-${_pcre2_ver}.tar.bz2"
     sleep 1
     tar -xf pcre2-${_pcre2_ver}.tar.*
@@ -239,7 +239,7 @@ getent passwd nginx >/dev/null || useradd -r -d /var/lib/nginx -g nginx -s /usr/
 ############################################################################
 _vmajor=4
 _vminor=7
-_vpatch=1
+_vpatch=2
 _longver=$(printf "%1d%03d%03d" ${_vmajor} ${_vminor} ${_vpatch})
 _fullver="$(echo \"${_vmajor}\.${_vminor}\.${_vpatch}\")"
 sed "s@#define nginx_version.*@#define nginx_version      ${_longver}@g" -i src/core/nginx.h
@@ -423,6 +423,9 @@ sleep 2
 rm -fr /tmp/nginx/etc/nginx/nginx.conf
 
 cd /tmp/nginx
+sleep 1
+chown -R root:root *
+sleep 1
 find /tmp/nginx -type f -name .packlist -exec rm -vf '{}' \;
 find /tmp/nginx -type f -name perllocal.pod -exec rm -vf '{}' \;
 find /tmp/nginx -type f -empty -exec rm -vf '{}' \;
