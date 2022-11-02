@@ -36,12 +36,17 @@ fi
 
 _dl_nginx() {
     set -e
-    wget -c -t 9 -T 9 'https://hg.nginx.org/nginx/archive/tip.tar.gz'
-    sleep 1
-    tar -xf tip.tar.gz
-    sleep 1
-    rm -f tip.tar.gz
+    #wget -c -t 9 -T 9 'https://hg.nginx.org/nginx/archive/tip.tar.gz'
+    #sleep 1
+    #tar -xof tip.tar.gz
+    #sleep 1
+    #rm -f tip.tar.gz
     #mv -f nginx-* nginx
+    wget -c -t 9 -T 9 'https://hg.nginx.org/nginx/archive/default.tar.gz'
+    sleep 1
+    tar -xof default.tar.gz
+    sleep 1
+    rm -f default.tar.gz
     # zlib
     _zlib_ver="$(wget -qO- 'https://www.zlib.net/' | grep -i 'HREF="zlib-[0-9].*\.tar\.' | sed 's|"|\n|g' | grep '^zlib-' | grep -ivE 'alpha|beta|rc' | sed -e 's|zlib-||g' -e 's|\.tar.*||g' | sort -V | uniq | tail -n 1)"
     wget -c -t 9 -T 9 "https://zlib.net/zlib-${_zlib_ver}.tar.xz"
@@ -222,8 +227,8 @@ _build_brotli() {
 
 _build_libmaxminddb
 _build_brotli
-tar -xf /tmp/libmaxminddb-*.el7.x86_64.tar.xz -C /
-tar -xf /tmp/brotli-*.el7.x86_64.tar.xz -C /
+tar -xof /tmp/libmaxminddb-*.el7.x86_64.tar.xz -C /
+tar -xof /tmp/brotli-*.el7.x86_64.tar.xz -C /
 sleep 1
 /sbin/ldconfig >/dev/null 2>&1
 rm -f /tmp/libmaxminddb-*.el7.x86_64.tar.xz /tmp/brotli-*.el7.x86_64.tar.xz
